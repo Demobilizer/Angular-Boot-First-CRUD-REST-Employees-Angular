@@ -1,0 +1,82 @@
+<head>
+    <style>
+        body {
+            max-width: 50%;
+            margin: 0 auto !important;
+        }
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+        .my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+    </style>
+</head>
+
+<body>
+
+<button
+    *ngIf="userService.isUserLoggedIn()" class="btn btn-primary" style="float: right;" 
+    (click)="userService.logout()">Logout!
+</button>
+
+<h4 style="text-align: center;">All employee detail </h4> <br>
+<h5 style="text-align: center; color: rgb(180, 29, 3);"> {{delSuccessMsg}}</h5>
+<h5 style="color: rgb(37, 230, 11); text-align: center;">{{successMsg}}</h5>
+<table border="1" class="table table-striped">
+    <thead></thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email Id</th>
+            <th>Salary</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    
+    <tbody>
+
+        <tr *ngFor="let emp of employees; let i = index">
+        
+            <td>{{emp.empId}}</td>
+            <td>
+                <span *ngIf="!emp.isEdit">{{emp.empName}}</span>
+                <input type="text" [(ngModel)]="emp.empName" *ngIf="emp.isEdit">
+            </td>
+            <td>
+                <span *ngIf="!emp.isEdit">{{emp.emailId}}</span>
+                <input type="text" [(ngModel)]="emp.emailId" *ngIf="emp.isEdit">
+            </td>
+            <td>
+                <span *ngIf="!emp.isEdit">{{emp.salary}}</span>
+                <input type="text" [(ngModel)]="emp.salary" *ngIf="emp.isEdit">
+            </td>
+            <td>
+                <input type="submit" value="Edit" class="btn btn-info" (click)="change(emp)" *ngIf="!emp.isEdit" 
+                [disabled]="inEdit">
+                <!-- <input type="hidden" ng-model="emp1" /> [disabled]="emp.isEdit && !emp.inEdit" -->
+                
+                <input type="submit" value="Update" class="btn btn-primary" *ngIf="emp.isEdit" (click)="updateEmployee(emp)">
+            </td>
+            <td>
+                <input type="submit" value="Delete" class="btn btn-danger" *ngIf="!emp.isEdit" [disabled]="inEdit"
+                    (click)="deleteEmployee(emp)" >
+
+                <input type="submit" value="Cancel" class="btn btn-danger" *ngIf="emp.isEdit" 
+                    (click)="emp.isEdit = !emp.isEdit; inEdit = !inEdit" >
+            </td>
+            
+        </tr>
+        
+    </tbody>
+</table>
+
+<div style="text-align: right; text-decoration: underline;">
+    <h4>
+        <a href="http://localhost:4200/add">Add Employee</a>
+    </h4>
+</div>
+
+</body>

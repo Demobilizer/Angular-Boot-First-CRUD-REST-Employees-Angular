@@ -1,0 +1,70 @@
+ <head>
+    <style>
+        body {
+            max-width: 50%;
+            margin: 0 auto !important;
+        }
+        input {
+            width: 100%;
+        }
+        .invalid {
+            color: tomato;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <button
+    *ngIf="userService.isUserLoggedIn()" class="btn btn-primary" style="float: right;" 
+    (click)="userService.logout()">Logout!
+</button>
+<h4 style="text-align: center;">Add Employee</h4> <br>
+<h5 style="color: rgb(37, 230, 11); text-align: center;">{{successMsg}}</h5>
+<h5 style="color: brown; text-align: center;">{{errorMsg}}</h5>
+    <form [formGroup]="addForm">
+        <div class="form-group">
+            <input type="text" placeholder="Enter Employee Name" id="empName" 
+                formControlName="empName" 
+                 class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && e.empName.errors }">
+                
+                <!-- <div *ngIf="submitted && e.empName.errors" class="invalid">
+                    <div *ngIf="e.empName.required">Please enter Employee Name</div>
+                </div> -->
+        </div>
+
+        <div class="form-group">
+            <input type="text" placeholder="Enter Employee Email Id" id="emailId" 
+            formControlName="emailId" class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && e.emailId.errors }">
+
+                <!-- <div *ngIf="submitted && e.emailId.errors" class="invalid">
+                    <div *ngIf="e.emailId.required">Please enter Email Id</div>
+                </div> -->
+        </div>
+
+        <div class="form-group">
+            <input type="text" placeholder="Enter Employee salary" 
+            
+            id="salary" formControlName="salary"
+                 class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && e.salary.errors }">
+
+                <!-- <div *ngIf="submitted && e.salary.errors" class="invalid">
+                    <div *ngIf="e.salary.required">Please enter salary</div>
+                </div> -->
+
+        </div>
+
+        <input type="button" value="Submit" class="btn btn-primary" 
+            (click)="addEmployee()"> 
+    </form>
+
+    <div style="text-align: right; text-decoration: underline;">
+        <h4>
+            <br><a href="http://localhost:4200/view">View all Employees</a>
+        </h4>
+    </div>
+
+</body>
